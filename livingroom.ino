@@ -22,8 +22,9 @@ long delayMs = DELAY_LONG;
 void setup() {
   pinMode(PIN_LED, OUTPUT);
 
+  Serial.begin(19200, SERIAL_8N1, SERIAL_TX_ONLY);
 //  dht.begin();
-  Serial.begin(19200);
+//  Serial.begin(19200);
   WIFI_Connect();
 }
 
