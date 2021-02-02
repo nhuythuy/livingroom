@@ -6,71 +6,23 @@
  */
 
 //#include <DHT.h>
-#include <SPI.h>
-#include <ESP8266WiFi.h>
 #include "global_vars.h"
 #include "pin_define.h"
-#include "wifi_pw.h"
-#include "ds1621.h"
+#include "wifi_cloud.h"
 #include <ArduinoJson.h>
 
 #define DELAY_LONG        5000      // 5,0 seconds
 
 int serverHomeCounter = 0;
-
-char ssid[] = "VNNO";
-char password[] = WIFI_PW;                // password of your home WiFi
-WiFiServer server(80);                    
-
-IPAddress ip(192, 168, 1, 5);             // IP address of the server
-IPAddress gateway(192,168,1,1);           // gateway of your network
-IPAddress subnet(255,255,255,0);          // subnet mask of your network
-
+                    
 //DHT dht(PIN_SS_DHT, DHT11, 15);
 
 long delayMs = DELAY_LONG;
-
-void WIFI_Connect(){
-  Serial.println();
-  Serial.println("MAC: " + WiFi.macAddress());
-  Serial.println("Connecting to " + String(ssid));
-
-  WiFi.config(ip, gateway, subnet);       // forces to use the fix IP
-  WiFi.begin(ssid, password);
-
-  bool ledStatus = false;
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-
-    ledStatus = !ledStatus;
-    digitalWrite(PIN_LED, !ledStatus);
-    if(debugCounter++ > 80)
-    {
-      debugCounter = 0;
-      Serial.println("!");
-    }
-  }
-
-  delay(500);
-  Serial.println("Connected to wifi");
-  Serial.print("Status: ");   Serial.println(WiFi.status());    // Network parameters
-  Serial.print("IP: ");       Serial.println(WiFi.localIP());
-  Serial.print("Subnet: ");   Serial.println(WiFi.subnetMask());
-  Serial.print("Gateway: ");  Serial.println(WiFi.gatewayIP());
-  Serial.print("SSID: ");     Serial.println(WiFi.SSID());
-  Serial.print("Signal: ");   Serial.println(WiFi.RSSI());
-  Serial.println();
-
-  server.begin(); // starts the server
-  delay(1000);
-}
 
 void setup() {
   pinMode(PIN_LED, OUTPUT);
 
 //  dht.begin();
-  ds1621Setup();
   Serial.begin(19200);
   WIFI_Connect();
 }
@@ -93,9 +45,6 @@ void delayWithErrorCheck(){
 bool updateHumidTempe(){
 //  humidity = dht.readHumidity();
 //  temp = dht.readTemperature();
-
-  temp = ds1621GetTemperature();
-  Serial.println("Temperature: " + String(temp, 1));
 
   if (isnan(humidity) || isnan(temp)) {
     Serial.println("Failed to read from DHT sensor!");
