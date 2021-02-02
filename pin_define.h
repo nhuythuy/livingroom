@@ -1,3 +1,6 @@
+#ifndef LIVINGROOM_IO
+#define LIVINGROOM_IO
+
 // https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
 // IMPORTANT NOTE: Remove PIN_SS_DOOR_MAIN connector b4 uploading code to NodeMcu, uploading fail otherwise
 
@@ -25,3 +28,5 @@
 
 #define FIELD_ID_POWER_CAM  8
 #define FIELD_ID_POWER_LOAD 9
+
+#endif
