@@ -7,7 +7,7 @@ void CommMain(){
     if (client.connected()) {
       digitalWrite(PIN_LED, LOW);  // to show the communication only (inverted logic)
       Serial.println(".");
-      String request = client.readStringUntil('\r');    // receives the message from the client
+      String request = client.readStringUntil('\n');    // receives the message from the client
       Serial.print("Request from client: "); Serial.println(request);
       client.flush();
       //client.println("Hi client! No, I am listening.\r"); // sends the answer to the client
@@ -24,7 +24,7 @@ void CommMain(){
     
       char jsonHomeMain[100];
       serializeJson(doc, jsonHomeMain);
-      client.println(String(jsonHomeMain) + "\r");
+      client.println(String(jsonHomeMain) + "\n");
       Serial.println("Reply from server: " + String(jsonHomeMain));
 
       digitalWrite(PIN_LED, HIGH);

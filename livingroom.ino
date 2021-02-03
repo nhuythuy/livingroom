@@ -5,25 +5,27 @@
  *  Communicates clients as diff. nodes
  */
 
-//#include <DHT.h>
+#include <DHT.h>
 #include "global_vars.h"
 #include "pin_define.h"
 #include "wifi_cloud.h"
 #include "comm_main.h"
 
 #define DELAY_LONG        5000      // 5,0 seconds
+#define DELAY_SHORT       2500
+
+long delayMs = DELAY_SHORT;
 
 int serverHomeCounter = 0;
-                    
-//DHT dht(PIN_SS_DHT, DHT11, 15);
 
-long delayMs = DELAY_LONG;
+DHT dht(PIN_SS_DHT, DHT11, 15);
+
 
 void setup() {
   pinMode(PIN_LED, OUTPUT);
 
   Serial.begin(19200, SERIAL_8N1, SERIAL_TX_ONLY);
-//  dht.begin();
+  dht.begin();
 //  Serial.begin(19200);
   WIFI_Connect();
 }
@@ -44,8 +46,8 @@ void delayWithErrorCheck(){
 }
 
 bool updateHumidTempe(){
-//  humidity = dht.readHumidity();
-//  temp = dht.readTemperature();
+  humidity = dht.readHumidity();
+  temp = dht.readTemperature();
 
   if (isnan(humidity) || isnan(temp)) {
     Serial.println("Failed to read from DHT sensor!");
