@@ -26,9 +26,14 @@ void setup() {
 void loop (){
   runtimeMinutes = millis() / 60000;
 
-  delay(1000);
   updateHumidTemp();
-  delay(1000);
+  delay(500);
+
+  Serial.println("Living room: Runtime (" + String(runtimeMinutes)
+  + "), Temp: (" + String(temp)
+  + "), Humidity: (" + String(humidity)
+  + "), Door back: (" + String(ssDoorBack)
+  + "), Door back opened: (" + String(doorBackOpenedMinutes) + ") min");
 
   CommMain();
 

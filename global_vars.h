@@ -35,9 +35,7 @@ int acActuators = 0;
 bool forceCamPower = 0;
 bool forceRadioPower = 0;
 
-int timeDoorBasementOpened = 0;
-int minutesDoorBackOpened = 0;
-int minutesDoorBasementOpened = 0;
+int doorBackOpenedMinutes = 0;
 
 int playMelodyCounter = 0;
 int runtimeMinutes = 0;

@@ -19,7 +19,7 @@ void CommMain(){
       doc["humidity"] = String(humidity, 2);
       ssDoorBack = !ssDoorBack;
       doc["ssDoorBack"] = ssDoorBack;
-      doc["ssDoorBackOpenMin"] = minutesDoorBackOpened++;
+      doc["ssDoorBackOpenMin"] = doorBackOpenedMinutes++;
     
       char jsonHomeMain[100];
       serializeJson(doc, jsonHomeMain);

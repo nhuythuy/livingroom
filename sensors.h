@@ -9,14 +9,14 @@ void setupSensors(){
 }
 
 bool updateHumidTemp(){
-  float bmHumidity = dht.readHumidity();
-  float bmTemp = dht.readTemperature();
-  if (isnan(bmHumidity) || isnan(bmTemp)) {
+  humidity = dht.readHumidity();
+  temp = dht.readTemperature();
+  if (isnan(humidity) || isnan(temp)) {
     Serial.println("Failed to read from DHT sensor!");
 
     blinkLed();
-    bmHumidity = -100;
-    bmTemp = -100;
+    humidity = -100;
+    temp = -100;
     return false;
   }
 
