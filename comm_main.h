@@ -5,7 +5,7 @@ void CommMain(){
   WiFiClient client = server.available();
   if (client) {
     if (client.connected()) {
-      digitalWrite(PIN_LED, LOW);  // to show the communication only (inverted logic)
+      flipLed();
       Serial.println(".");
       String request = client.readStringUntil('\n');    // receives the message from the client
       Serial.print("Request from client: "); Serial.println(request);
@@ -27,7 +27,7 @@ void CommMain(){
       client.println(String(jsonHomeMain) + "\n");
       Serial.println("Reply from server: " + String(jsonHomeMain));
 
-      digitalWrite(PIN_LED, HIGH);
+      flipLed();
     }
     client.stop();                // tarminates the connection with the client
   }
