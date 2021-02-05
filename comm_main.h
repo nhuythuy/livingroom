@@ -14,7 +14,6 @@ void CommMain(){
 
       DynamicJsonDocument doc(100);
       doc["node"] = "homelivingroom";
-      doc["heartbeat"] = heartbeat++;
       doc["runtime"] = runtimeMinutes;
       doc["temp"] = String(temp, 2);
       doc["humidity"] = String(humidity, 2);

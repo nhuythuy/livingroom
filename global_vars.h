@@ -7,7 +7,6 @@ long delayMs = DELAY_SHORT;
 
 long globalState = 0;
 int debugCounter = 0;
-int heartbeat = 0;
 
 bool stateLed = 0;
 
