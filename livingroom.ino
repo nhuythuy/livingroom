@@ -12,10 +12,6 @@
 #include "sensors.h"
 #include "comm_main.h"
 
-#define DELAY_LONG        5000      // 5,0 seconds
-#define DELAY_SHORT       2500
-
-long delayMs = DELAY_SHORT;
 
 int serverHomeCounter = 0;
 
@@ -29,27 +25,12 @@ void setup() {
 }
 
 
-void blinkLed(){
-  digitalWrite(PIN_LED, false);
-  delay(1000);
-  digitalWrite(PIN_LED, true);
-  delay(1000);
-}
-
-void delayWithErrorCheck(){
-    if(globalState > 0)
-    blinkLed();
-  else
-    delay(delayMs);
-}
-
-
 // =======================================================
 void loop (){
   runtimeMinutes = millis() / 60000;
 
   delay(1000);
-  updateHumidTempe();
+  updateHumidTemp();
   delay(1000);
 
   CommMain();

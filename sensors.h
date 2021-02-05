@@ -1,5 +1,7 @@
 #include <DHT.h>
+#include "lib.h"
 #include "Adafruit_SHTC3.h"
+
 
 DHT dht(PIN_SS_DHT, DHT11, 15);
 Adafruit_SHTC3 shtc3 = Adafruit_SHTC3();
@@ -33,7 +35,7 @@ bool updateHumidTemp(){
   if (isnan(bmHumidity) || isnan(bmTemp)) {
     Serial.println("Failed to read from DHT sensor!");
 
-    delayWithErrorCheck();
+    blinkLed();
     bmHumidity = -100;
     bmTemp = -100;
     return false;

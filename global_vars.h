@@ -1,9 +1,15 @@
 #ifndef GLOBAL_VARS
 #define GLOBAL_VARS
 
+#define DELAY_LONG        5000      // 5,0 seconds
+#define DELAY_SHORT       2500
+long delayMs = DELAY_SHORT;
+
 long globalState = 0;
 int debugCounter = 0;
 int heartbeat = 0;
+
+bool stateLed = 0;
 
 // sensors
 float humidity = 0.0;
