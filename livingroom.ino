@@ -13,15 +13,12 @@
 #include "comm_main.h"
 
 
-int serverHomeCounter = 0;
-
-
 void setup() {
   pinMode(PIN_LED, OUTPUT);
 
   Serial.begin(19200, SERIAL_8N1, SERIAL_TX_ONLY);
-  setupSensors();
   WIFI_Connect();
+  setupSensors();
 }
 
 
