@@ -9,6 +9,7 @@
 #include "global_vars.h"
 #include "pin_define.h"
 #include "wifi_cloud.h"
+#include "sensors.h"
 #include "comm_main.h"
 
 #define DELAY_LONG        5000      // 5,0 seconds
@@ -18,15 +19,12 @@ long delayMs = DELAY_SHORT;
 
 int serverHomeCounter = 0;
 
-DHT dht(PIN_SS_DHT, DHT11, 15);
-
 
 void setup() {
   pinMode(PIN_LED, OUTPUT);
 
   Serial.begin(19200, SERIAL_8N1, SERIAL_TX_ONLY);
-  dht.begin();
-//  Serial.begin(19200);
+  setupSensors();
   WIFI_Connect();
 }
 
@@ -45,22 +43,8 @@ void delayWithErrorCheck(){
     delay(delayMs);
 }
 
-bool updateHumidTempe(){
-  humidity = dht.readHumidity();
-  temp = dht.readTemperature();
 
-  if (isnan(humidity) || isnan(temp)) {
-    Serial.println("Failed to read from DHT sensor!");
-
-    delayWithErrorCheck();
-    humidity = -100;
-    temp = -100;
-    return false;
-  }
-
-  return true;
-}
-
+// =======================================================
 void loop (){
   runtimeMinutes = millis() / 60000;
 
