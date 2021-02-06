@@ -36,7 +36,7 @@ void WIFI_Connect(){
     }
   }
 
-  delay(500);
+  delay(100);
   Serial.println();
   Serial.println("Connected to wifi");
   Serial.print("Status: ");   Serial.println(WiFi.status());    // Network parameters
@@ -46,10 +46,10 @@ void WIFI_Connect(){
   Serial.print("SSID: ");     Serial.println(WiFi.SSID());
   Serial.print("Signal: ");   Serial.println(WiFi.RSSI());
   Serial.println();
-  delay(500);
+  delay(100);
 
   server.begin(); // starts the server
-  delay(500);
+  delay(100);
 }
 
 #endif

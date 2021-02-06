@@ -14,7 +14,7 @@ bool updateHumidTemp(){
   if (isnan(humidity) || isnan(temp)) {
     Serial.println("Failed to read from DHT sensor!");
 
-    blinkLed();
+    flipLed();
     humidity = -100;
     temp = -100;
     return false;

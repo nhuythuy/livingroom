@@ -14,26 +14,34 @@
 
 
 void setup() {
+  ESP.wdtDisable();
   pinMode(PIN_LED, OUTPUT);
 
   Serial.begin(19200, SERIAL_8N1, SERIAL_TX_ONLY);
   WIFI_Connect();
   setupSensors();
+
+  ESP.wdtEnable(5000); // msec
 }
 
 
 // =======================================================
 void loop (){
+  ESP.wdtFeed();
+
+  long mill = millis();
   runtimeMinutes = millis() / 60000;
 
-  updateHumidTemp();
-  delay(500);
+  if((mill - ssSamplingTimer) > 2000){ // sampling sensors every 1 sec
+    updateHumidTemp();
+    ssSamplingTimer = mill;
 
-  Serial.println("Living room: Runtime (" + String(runtimeMinutes)
-  + "), Temp: (" + String(temp)
-  + "), Humidity: (" + String(humidity)
-  + "), Door back: (" + String(ssDoorBack)
-  + "), Door back opened: (" + String(doorBackOpenedMinutes) + ") min");
+    Serial.println("Living room: Runtime (" + String(runtimeMinutes)
+      + "), Temp: (" + String(temp)
+      + "), Humidity: (" + String(humidity)
+      + "), Door back: (" + String(ssDoorBack)
+      + "), Door back opened: (" + String(doorBackOpenedMinutes) + ") min");
+  }
 
   CommMain();
 
@@ -43,5 +51,4 @@ void loop (){
     WIFI_Connect();
   }
 
-  delay(5000);
 }

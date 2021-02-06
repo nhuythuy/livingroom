@@ -11,18 +11,4 @@ void flipLed(){
   digitalWrite(PIN_LED, stateLed);
 }
 
-void blinkLed(){
-  flipLed();
-  flipLed();
-}
-
-void delayWithErrorCheck(){
-    if(globalState > 0)
-    blinkLed();
-  else
-    delay(delayMs);
-}
-
-
-
 #endif
