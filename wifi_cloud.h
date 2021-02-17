@@ -1,5 +1,6 @@
 #include <ESP8266WiFi.h>
 #include "global_vars.h"
+#include "datetime.h"
 #include "auth_settings.h"
 #include "lib.h"
 
@@ -20,7 +21,7 @@ void WIFI_Connect(){
   Serial.println("MAC: " + WiFi.macAddress()); Serial.println();
   Serial.println("Connecting to " + String(wifiSsid));
 
-  WiFi.config(ip, gateway, subnet);       // forces to use the fix IP
+  //WiFi.config(ip, gateway, subnet);       // forces to use the static IP
   WiFi.begin(wifiSsid, wifiPassword);
 
   bool ledStatus = false;

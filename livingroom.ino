@@ -10,7 +10,13 @@
 #include "pin_define.h"
 #include "wifi_cloud.h"
 #include "sensors.h"
-#include "comm_main.h"
+//#include "comm_main.h"
+#include "blynk.h"
+#include "cayenne.h"
+
+#define ENABLE_WIFI
+#define ENABLE_BLYNK
+#define ENABLE_CAYENNE
 
 
 void setup() {
@@ -18,7 +24,19 @@ void setup() {
   pinMode(PIN_LED, OUTPUT);
 
   Serial.begin(19200, SERIAL_8N1, SERIAL_TX_ONLY);
+
+#ifdef ENABLE_WIFI
   WIFI_Connect();
+  setupDateTime();
+
+#ifdef ENABLE_CAYENNE
+  cayenneSetup();
+#endif
+#ifdef ENABLE_BLYNK
+  blynkSetup();
+#endif
+#endif
+
   setupSensors();
 
   ESP.wdtEnable(5000); // msec
@@ -33,6 +51,10 @@ void loop (){
   runtimeMinutes = millis() / 60000;
 
   if((mill - ssSamplingTimer) > 2000){ // sampling sensors every 1 sec
+#ifdef ENABLE_WIFI
+    getServerTime();
+#endif
+
     updateHumidTemp();
     ssSamplingTimer = mill;
 
@@ -43,13 +65,22 @@ void loop (){
       + "), Door back opened: (" + String(doorBackOpenedMinutes) + ") min");
   }
 
-  CommMain();
+//  CommMain();
+#ifdef ENABLE_WIFI
+#ifdef ENABLE_CAYENNE
+  Cayenne.loop();
+#endif
+#ifdef ENABLE_BLYNK
+  blynkLoop();
+#endif
 
   if(WiFi.status() == WL_DISCONNECTED){
     Serial.println("WiFi connection lost! Reconnecting...");
     WiFi.disconnect();
-    WIFI_Connect();
+    WIFI_Connect();    
   }
+#endif
+
   flipLed();
 
 }
