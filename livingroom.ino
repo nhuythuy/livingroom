@@ -50,11 +50,17 @@ void loop (){
   long mill = millis();
   runtimeMinutes = millis() / 60000;
 
-  if((mill - ssSamplingTimer) > 2000){ // sampling sensors every 2 sec
 #ifdef ENABLE_WIFI
+  if(WiFi.status() == WL_DISCONNECTED){
+    Serial.println("WiFi connection lost! Reconnecting...");
+    WiFi.disconnect();
+    WIFI_Connect();    
+  }
+
     getServerTime();
 #endif
 
+  if((mill - ssSamplingTimer) > 2000){ // sampling sensors every 2 sec
     updateHumidTemp();
     ssSamplingTimer = mill;
 
@@ -73,12 +79,6 @@ void loop (){
 #ifdef ENABLE_BLYNK
   blynkLoop();
 #endif
-
-  if(WiFi.status() == WL_DISCONNECTED){
-    Serial.println("WiFi connection lost! Reconnecting...");
-    WiFi.disconnect();
-    WIFI_Connect();    
-  }
 #endif
 
   flipLed();
