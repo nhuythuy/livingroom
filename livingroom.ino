@@ -50,7 +50,7 @@ void loop (){
   long mill = millis();
   runtimeMinutes = millis() / 60000;
 
-  if((mill - ssSamplingTimer) > 2000){ // sampling sensors every 1 sec
+  if((mill - ssSamplingTimer) > 2000){ // sampling sensors every 2 sec
 #ifdef ENABLE_WIFI
     getServerTime();
 #endif
