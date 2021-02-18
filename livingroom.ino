@@ -1,16 +1,8 @@
-/*  Connects to the home WiFi network
- *  Asks some network parameters
- *  Starts WiFi server with fix IP and listens
- *  Receives and sends messages to the client
- *  Communicates clients as diff. nodes
- */
-
 #include <DHT.h>
 #include "global_vars.h"
 #include "pin_define.h"
 #include "wifi_cloud.h"
 #include "sensors.h"
-//#include "comm_main.h"
 #include "blynk.h"
 #include "cayenne.h"
 
@@ -42,13 +34,14 @@ void setup() {
   ESP.wdtEnable(5000); // msec
 }
 
-
+unsigned long previousMillis = millis();
+unsigned long currentMillis = millis();
 // =======================================================
 void loop (){
   ESP.wdtFeed();
 
-  long mill = millis();
-  runtimeMinutes = millis() / 60000;
+  currentMillis = millis();
+  runtimeMinutes = currentMillis / 60000;
 
 #ifdef ENABLE_WIFI
   if(WiFi.status() == WL_DISCONNECTED){
@@ -60,18 +53,16 @@ void loop (){
     getServerTime();
 #endif
 
-  if((mill - ssSamplingTimer) > 2000){ // sampling sensors every 2 sec
+  if(abs(currentMillis - previousMillis) > 2000){ // sampling sensors every 2 sec
+    previousMillis = currentMillis;
     updateHumidTemp();
-    ssSamplingTimer = mill;
 
     Serial.println("Living room: Runtime (" + String(runtimeMinutes)
-      + "), Temp: (" + String(temp)
-      + "), Humidity: (" + String(humidity)
+      + "), Temp: (" + String(temp) + "), Humidity: (" + String(humidity)
       + "), Door back: (" + String(ssDoorBack)
       + "), Door back opened: (" + String(doorBackOpenedMinutes) + ") min");
   }
 
-//  CommMain();
 #ifdef ENABLE_WIFI
 #ifdef ENABLE_CAYENNE
   Cayenne.loop();
@@ -82,5 +73,4 @@ void loop (){
 #endif
 
   flipLed();
-
 }

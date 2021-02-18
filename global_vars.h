@@ -5,7 +5,6 @@
 #define DELAY_SHORT       2500
 long delayMs = DELAY_SHORT;
 
-long ssSamplingTimer = 0;
 long globalState = 0;
 int debugCounter = 0;
 
