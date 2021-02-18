@@ -6,6 +6,9 @@
 #ifndef DATE_TIME
 #define DATE_TIME
 
+int currentDay = -1;
+int currentHour = -1;
+
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "time.nist.gov");
 char* DayOfWeek[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};

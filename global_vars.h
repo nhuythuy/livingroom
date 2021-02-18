@@ -32,7 +32,4 @@ int doorBackOpenedMinutes = 0;
 
 int playMelodyCounter = 0;
 int runtimeMinutes = 0;
-int currentDay = -1;
-int currentHour = -1;
-
 #endif
