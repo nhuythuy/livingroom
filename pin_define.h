@@ -14,7 +14,7 @@
 #define PIN_SS_WATER_SMOKE          D0 // smoke, water leak
 #define PIN_SS_MOTION               D1 // No. 2, motion sensor for entrance
 
-//#define PIN_SS_DOOR_BASEMENT      D6 // No. 1, door to go down to basement and door to renting area
+//#define PIN_SS_DOOR_BASEMENT      D2 // No. 1, door to go down to basement and door to renting area
 //#define PIN_LIGHT_LIVING_ROOM     Dx
 
 
@@ -22,7 +22,7 @@
 #define PIN_LED                     D4 // D4: same as built in LED GPIO2
 #define PIN_TONE_MELODY             D8
 
-#define PIN_CAM_POWER               D2 // No. 1, power for entrance led
+#define PIN_AC_CAM_POWER            D6 // No. 1, power for entrance led
 #define PIN_AC_POWER_RADIO          D3 // OK as output, not possible to connect to OPTO input: connected to FLASH button, boot fails if pulled LOW
 
 // remaining pins: RX (in), D3

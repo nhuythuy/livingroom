@@ -76,7 +76,7 @@ BLYNK_WRITE(VP_FORCE_RADIO_POWER)
 
 BLYNK_WRITE(VP_FORCE_CAMERA_POWER)
 {
-  int pinValue = param.asInt(); // assigning incoming value from pin VP_FORCE_CAMERA_POWER to a variable
+  forceCamPower = (boolean)param.asInt(); // assigning incoming value from pin VP_FORCE_CAMERA_POWER to a variable
   // process received value
 }
 

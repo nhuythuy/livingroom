@@ -3,6 +3,7 @@
 #include "pin_define.h"
 #include "wifi_cloud.h"
 #include "sensors.h"
+#include "actuators.h"
 #include "blynk.h"
 #include "cayenne.h"
 
@@ -13,7 +14,7 @@
 
 void setup() {
   ESP.wdtDisable();
-  pinMode(PIN_LED, OUTPUT);
+  setupActuators();
 
   Serial.begin(19200, SERIAL_8N1, SERIAL_TX_ONLY);
 
@@ -57,6 +58,8 @@ void loop (){
     previousMillis = currentMillis;
     updateHumidTemp();
 
+    updateCamPower();
+    
     Serial.println("Living room: Runtime (" + String(runtimeMinutes)
       + "), Temp: (" + String(temp) + "), Humidity: (" + String(humidity)
       + "), Door back: (" + String(ssDoorBack)
