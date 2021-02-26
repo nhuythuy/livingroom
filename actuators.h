@@ -9,7 +9,7 @@ void setupActuators(){
 }
 
 void updateCamPower(){
-  if(forceCamPower == 1)
+  if(forceCamPower == true)
     digitalWrite(PIN_AC_CAM_POWER, LOW);
   else // if(forceCamPower == 0)
     digitalWrite(PIN_AC_CAM_POWER, HIGH);

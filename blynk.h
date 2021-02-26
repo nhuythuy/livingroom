@@ -66,18 +66,18 @@ void blynkReconnect() {
   }
 }
 
-// This function will be called every time Slider Widget
-// in Blynk app writes values to the Virtual Pin V1
-BLYNK_WRITE(VP_FORCE_RADIO_POWER)
+BLYNK_WRITE(VP_FORCE_CAMERA_POWER)
 {
-  int pinValue = param.asInt(); // assigning incoming value from pin VP_FORCE_RADIO_POWER to a variable
+  int pinVal = param.asInt(); // assigning incoming value from pin VP_FORCE_CAMERA_POWER to a variable
+  forceCamPower = (boolean)pinVal;
+  Serial.println("Force camera power: " + String(forceCamPower) + " - " + String(pinVal));
   // process received value
 }
 
-BLYNK_WRITE(VP_FORCE_CAMERA_POWER)
+BLYNK_WRITE(VP_FORCE_RADIO_POWER)
 {
-  forceCamPower = (boolean)param.asInt(); // assigning incoming value from pin VP_FORCE_CAMERA_POWER to a variable
-  // process received value
+  int pinVal = param.asInt(); // assigning incoming value from pin VP_FORCE_RADIO_POWER to a variable
+  Serial.println("Force radio power: " + String(pinVal));
 }
 
 // for all signals requested by Blynk app (slow response)

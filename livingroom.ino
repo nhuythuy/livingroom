@@ -44,26 +44,27 @@ void loop (){
   currentMillis = millis();
   runtimeMinutes = currentMillis / 60000;
 
+  if(abs(currentMillis - previousMillis) > 2000){ // sampling sensors every 2 sec
 #ifdef ENABLE_WIFI
-  if(WiFi.status() == WL_DISCONNECTED){
-    Serial.println("WiFi connection lost! Reconnecting...");
-    WiFi.disconnect();
-    WIFI_Connect();    
-  }
-
-    getServerTime();
+    if(WiFi.status() == WL_DISCONNECTED){
+      Serial.println("WiFi connection lost! Reconnecting...");
+      WiFi.disconnect();
+      WIFI_Connect();    
+    }
+  
+      getServerTime();
 #endif
 
-  if(abs(currentMillis - previousMillis) > 2000){ // sampling sensors every 2 sec
     previousMillis = currentMillis;
     updateHumidTemp();
-
     updateCamPower();
     
     Serial.println("Living room: Runtime (" + String(runtimeMinutes)
       + "), Temp: (" + String(temp) + "), Humidity: (" + String(humidity)
       + "), Door back: (" + String(ssDoorBack)
       + "), Door back opened: (" + String(doorBackOpenedMinutes) + ") min");
+
+    flipLed();
   }
 
 #ifdef ENABLE_WIFI
@@ -75,5 +76,4 @@ void loop (){
 #endif
 #endif
 
-  flipLed();
 }

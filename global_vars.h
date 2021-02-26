@@ -22,10 +22,10 @@ int ssWaterLeak = 0;
 
 
 // actuators
-bool acBuzzer = 0;
+bool acBuzzer = false;
 
-bool forceCamPower = 0;
-bool forceRadioPower = 0;
+bool forceCamPower = false;
+bool forceRadioPower = false;
 
 int doorBackOpenedMinutes = 0;
 
