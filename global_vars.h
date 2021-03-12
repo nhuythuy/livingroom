@@ -31,4 +31,10 @@ int doorBackOpenedMinutes = 0;
 
 int playMelodyCounter = 0;
 int runtimeMinutes = 0;
+
+int currentHour = -1;
+int currentDay = -1;
+int currentMin = -1;
+float systemHourMinute = 0.0;
+
 #endif

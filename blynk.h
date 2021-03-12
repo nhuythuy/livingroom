@@ -19,6 +19,8 @@ int blynkCounter = 0;
 #define VP_DOOR_BASEMENT_OPENED_MINUTES     V8
 #define VP_DOOR_BACK_OPENED_MINUTES         V9
 
+#define VP_SYSTEM_TIME                      V10
+
 #define VP_LR_RUNTIME                       V21   // living room node
 #define VP_LR_TEMPERATURE                   V22
 #define VP_LR_HUMIDITY                      V23
@@ -99,6 +101,10 @@ BLYNK_READ(VP_LR_TEMPERATURE){
 
 BLYNK_READ(VP_LR_HUMIDITY){
   Blynk.virtualWrite(VP_LR_HUMIDITY, humidity);
+}
+
+BLYNK_READ(VP_SYSTEM_TIME){
+  Blynk.virtualWrite(VP_SYSTEM_TIME, systemHourMinute);
 }
 
 
