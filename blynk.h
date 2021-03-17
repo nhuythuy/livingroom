@@ -117,6 +117,7 @@ void blynkTimerEvent()
   
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
+  yield();
   Serial.println("Blynk timer triggered...");
   // for all signals to be sent at once
 

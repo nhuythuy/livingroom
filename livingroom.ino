@@ -49,12 +49,14 @@ void loop (){
       WIFI_Connect();    
     }
   
-      getServerTime();
+    yield();
+    getServerTime();
 #endif
 
-    yield();
     previousMillis = currentMillis;
+    yield();
     updateHumidTemp();
+    yield();
     updateCamPower();
     
     Serial.println("Living room: Runtime (" + String(runtimeMinutes)
@@ -65,12 +67,13 @@ void loop (){
     flipLed();
   }
 
-  yield();
 #ifdef ENABLE_WIFI
 #ifdef ENABLE_CAYENNE
+  yield();
   Cayenne.loop();
 #endif
 #ifdef ENABLE_BLYNK
+  yield();
   blynkLoop();
 #endif
 #endif
