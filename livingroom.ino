@@ -7,10 +7,6 @@
 #include "blynk.h"
 #include "cayenne.h"
 
-#define ENABLE_WIFI
-#define ENABLE_BLYNK
-#define ENABLE_CAYENNE
-
 
 void setup() {
   ESP.wdtDisable();
@@ -41,6 +37,7 @@ unsigned long currentMillis = millis();
 void loop (){
   ESP.wdtFeed();
 
+  yield();
   currentMillis = millis();
   runtimeMinutes = currentMillis / 60000;
 
@@ -55,6 +52,7 @@ void loop (){
       getServerTime();
 #endif
 
+    yield();
     previousMillis = currentMillis;
     updateHumidTemp();
     updateCamPower();
@@ -67,6 +65,7 @@ void loop (){
     flipLed();
   }
 
+  yield();
 #ifdef ENABLE_WIFI
 #ifdef ENABLE_CAYENNE
   Cayenne.loop();

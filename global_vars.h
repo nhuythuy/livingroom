@@ -1,6 +1,11 @@
 #ifndef GLOBAL_VARS
 #define GLOBAL_VARS
 
+#define ENABLE_WIFI
+#define ENABLE_BLYNK
+//#define ENABLE_CAYENNE
+
+
 #define DELAY_LONG        5000      // 5,0 seconds
 #define DELAY_SHORT       2500
 long delayMs = DELAY_SHORT;
