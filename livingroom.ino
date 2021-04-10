@@ -27,7 +27,7 @@ void setup() {
 #endif
 
   setupSensors();
-
+  setupDigitalSensors();
   ESP.wdtEnable(5000); // msec
 }
 
@@ -56,6 +56,8 @@ void loop (){
     previousMillis = currentMillis;
     yield();
     updateHumidTemp();
+    yield();
+    updateDigitalSensors();
     yield();
     updateCamPower();
     

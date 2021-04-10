@@ -33,6 +33,7 @@ bool forceCamPower = false;
 bool forceRadioPower = false;
 
 int doorBackOpenedMinutes = 0;
+int doorBackOpenedAt = 0;
 
 int playMelodyCounter = 0;
 int runtimeMinutes = 0;

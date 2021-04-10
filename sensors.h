@@ -8,6 +8,27 @@ void setupSensors(){
   dht.begin();
 }
 
+void setupDigitalSensors(){
+  pinMode(PIN_SS_DOOR_BACK, INPUT);
+}
+
+void updateDigitalSensors(){
+  bool state;
+  state = !digitalRead(PIN_SS_DOOR_BACK);
+  if (state != ssDoorBack){
+#ifdef ENABLE_CAYENNE
+    writeCayenneDigitalState(CH_DOOR_BACK, state);
+#endif
+    if(state)
+      doorBackOpenedAt = millis();
+    else
+      doorBackOpenedAt = 0;
+
+    ssDoorBack = state;
+  }
+
+}
+
 bool updateHumidTemp(){
   humidity = dht.readHumidity();
   temp = dht.readTemperature();
