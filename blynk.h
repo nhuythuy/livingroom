@@ -10,13 +10,6 @@ int blynkCounter = 0;
 #define MESSAGE_DELAY                       100
 
 #define VP_BATT_VOLTAGE                     V1
-#define VP_BM_RUNTIME                       V2   // basement node
-#define VP_BM_TEMPERATURE                   V3
-#define VP_BM_HUMIDITY                      V4
-#define VP_ENTRANCE_MOTION_DETECTED_SECONDS V5
-#define VP_DOOR_MAIN_OPENED_MINUTES         V6
-#define VP_DOOR_TO_BASEMENT_OPENED_MINUTES  V7
-#define VP_DOOR_BASEMENT_OPENED_MINUTES     V8
 #define VP_DOOR_BACK_OPENED_MINUTES         V9
 
 #define VP_SYSTEM_TIME                      V10
@@ -25,22 +18,10 @@ int blynkCounter = 0;
 #define VP_LR_TEMPERATURE                   V22
 #define VP_LR_HUMIDITY                      V23
 
-#define VP_PS_RUNTIME                       V41   // power station node
-#define VP_PS_TEMPERATURE                   V42
-#define VP_PS_HUMIDITY                      V43
 
 // digital states
-#define VP_DOOR_MAIN                V51
-#define VP_DOOR_TO_BASEMENT         V52
-#define VP_DOOR_BASEMENT            V53
 #define VP_DOOR_BACK                V54
-#define VP_ENTRANCE_MOTION          V55
-#define VP_LIGHT_BASEMENT           V56
-#define VP_LIGHT_STAIR_BASEMENT     V57
-#define VP_ENTRANCE_LIGHT           V58
 #define VP_POWER_RADIO              V59
-#define CH_WATER_SMOKE_BASEMENT     V60
-#define VP_WATER_LEAK_1             V61
 
 #define VP_FORCE_RADIO_POWER        V100
 #define VP_FORCE_CAMERA_POWER       V101

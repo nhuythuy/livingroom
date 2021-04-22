@@ -3,7 +3,7 @@
 
 #define ENABLE_WIFI
 #define ENABLE_BLYNK
-//#define ENABLE_CAYENNE
+#define ENABLE_CAYENNE
 
 
 #define DELAY_LONG        5000      // 5,0 seconds

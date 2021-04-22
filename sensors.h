@@ -1,6 +1,6 @@
 #include <DHT.h>
 #include "lib.h"
-
+#include "cayenne.h"
 
 DHT dht(PIN_SS_DHT, DHT11, 15);
 
