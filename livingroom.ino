@@ -1,18 +1,26 @@
-#include <DHT.h>
-#include "global_vars.h"
-#include "pin_define.h"
-#include "wifi_cloud.h"
+
 #include "sensors.h"
 #include "actuators.h"
+#include "datetime.h"
 #include "blynk.h"
-#include "cayenne.h"
 
 
-void setup() {
+#define MESSAGE_DELAY 50
+
+void setup()
+{
   ESP.wdtDisable();
-  setupActuators();
 
-  Serial.begin(19200, SERIAL_8N1, SERIAL_TX_ONLY);
+  Serial.begin(115200);
+  Serial.println("-- Node name:         LIVING ROOM");
+  delay(100);
+
+  setupSensors();
+  setupDigitalSensors();
+  delay(100);
+
+  setupActuators();
+  delay(100);
 
 #ifdef ENABLE_WIFI
   WIFI_Connect();
@@ -26,49 +34,45 @@ void setup() {
 #endif
 #endif
 
-  setupSensors();
-  setupDigitalSensors();
+  setupDateTime();
+
   ESP.wdtEnable(5000); // msec
 }
 
 unsigned long previousMillis = millis();
 unsigned long currentMillis = millis();
-// =======================================================
-void loop (){
-  ESP.wdtFeed();
+long diffMillis = 0;
 
-  yield();
+void loop() {
   currentMillis = millis();
   runtimeMinutes = currentMillis / 60000;
+  diffMillis = currentMillis - previousMillis;
+  if(abs(diffMillis) > 2000){         // sampling sensors every 2 sec
+    previousMillis = currentMillis;   // save the last time  
 
-  if(abs(currentMillis - previousMillis) > 2000){ // sampling sensors every 2 sec
-#ifdef ENABLE_WIFI
-    if(WiFi.status() == WL_DISCONNECTED){
-      Serial.println("WiFi connection lost! Reconnecting...");
-      WiFi.disconnect();
-      WIFI_Connect();    
-    }
-  
     yield();
     getServerTime();
-#endif
 
-    previousMillis = currentMillis;
     yield();
+//    updateBattVolt();
+//    yield();
     updateHumidTemp();
     yield();
     updateDigitalSensors();
     yield();
     updateCamPower();
-    
-    Serial.println("Living room: Runtime (" + String(runtimeMinutes)
-      + "), Temp: (" + String(temp) + "), Humidity: (" + String(humidity)
-      + "), Door back: (" + String(ssDoorBack)
-      + "), Door back opened: (" + String(doorBackOpenedMinutes) + ") min");
 
+    Serial.println("-- Node name:              LIVING ROOM");
+    Serial.println("0. Runtime (min):          " + String(runtimeMinutes));
+    Serial.println("1. Temperature (*C):       " + String(temp));
+    Serial.println("2. Humidity (%):           " + String(humidity));
+    Serial.println("3. Door back opened (0/1): " + String(ssDoorBack) + " in (min)" + String(doorBackOpenedMinutes));
+    Serial.println("4. Motion IN (0/1):        " + String(ssMotion) + " OUT: " + String(acMotion));
+    Serial.println();
+  
     flipLed();
   }
-
+  
 #ifdef ENABLE_WIFI
 #ifdef ENABLE_CAYENNE
   yield();
@@ -79,5 +83,4 @@ void loop (){
   blynkLoop();
 #endif
 #endif
-
 }

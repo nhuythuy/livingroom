@@ -24,10 +24,11 @@ char dvClientID[] = CAYENNE_CLIENT_ID;
 
 
 // digital states
-#define CH_POWER_CAMERA             51
-#define CH_DOOR_BACK                54
+#define CH_DOOR_BACK                51
+#define CH_MOTION                   52
 
-#define CH_FORCE_RADIO_POWER        100
+#define CH_FORCE_CAMERA_POWER       100
+#define CH_FORCE_RADIO_POWER        101
 
 
 void cayenneSetup(){
@@ -46,7 +47,7 @@ CAYENNE_OUT_DEFAULT(){
     Cayenne.virtualWrite(CH_LR_RUNTIME, runtimeMinutes, "counter");
     Cayenne.celsiusWrite(CH_LR_TEMPERATURE, temp);
     Cayenne.virtualWrite(CH_LR_HUMIDITY, humidity, "rel_hum", "p");
-    Cayenne.virtualWrite(CH_SYSTEM_TIME, systemHourMinute);
+    Cayenne.virtualWrite(CH_SYSTEM_TIME, systemClock);
 
   // digital signals
 }

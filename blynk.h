@@ -1,4 +1,5 @@
 #include <BlynkSimpleEsp8266.h>
+
 #include "wifi_cloud.h"
 #include "global_vars.h"
 
@@ -9,22 +10,21 @@ int blynkCounter = 0;
 
 #define MESSAGE_DELAY                       100
 
-#define VP_BATT_VOLTAGE                     V1
-#define VP_DOOR_BACK_OPENED_MINUTES         V9
+#define VP_RUNTIME                          V0   // living room node
+#define VP_CLOCK                            V1
+#define VP_BATT_VOLTAGE                     V2
+#define VP_TEMPERATURE                      V3
+#define VP_HUMIDITY                         V4
 
-#define VP_SYSTEM_TIME                      V10
 
-#define VP_LR_RUNTIME                       V21   // living room node
-#define VP_LR_TEMPERATURE                   V22
-#define VP_LR_HUMIDITY                      V23
-
+#define VP_DOOR_BACK_OPENED_MINUTES         V20
 
 // digital states
-#define VP_DOOR_BACK                V54
-#define VP_POWER_RADIO              V59
+#define VP_DOOR_BACK                V51
+#define VP_MOTION                   V52
 
-#define VP_FORCE_RADIO_POWER        V100
-#define VP_FORCE_CAMERA_POWER       V101
+#define VP_FORCE_CAMERA_POWER       V100
+#define VP_FORCE_RADIO_POWER        V101
 
 #define BLYNK_PRINT Serial
 
@@ -72,20 +72,20 @@ BLYNK_READ(VP_DOOR_BACK_OPENED_MINUTES){
   Blynk.virtualWrite(VP_DOOR_BACK_OPENED_MINUTES, doorBackOpenedMinutes);
 }
 
-BLYNK_READ(VP_LR_RUNTIME){
-    Blynk.virtualWrite(VP_LR_RUNTIME, runtimeMinutes);
+BLYNK_READ(VP_RUNTIME){
+    Blynk.virtualWrite(VP_RUNTIME, runtimeMinutes);
 }
 
-BLYNK_READ(VP_LR_TEMPERATURE){
-  Blynk.virtualWrite(VP_LR_TEMPERATURE, temp);
+BLYNK_READ(VP_TEMPERATURE){
+  Blynk.virtualWrite(VP_TEMPERATURE, temp);
 }
 
-BLYNK_READ(VP_LR_HUMIDITY){
-  Blynk.virtualWrite(VP_LR_HUMIDITY, humidity);
+BLYNK_READ(VP_HUMIDITY){
+  Blynk.virtualWrite(VP_HUMIDITY, humidity);
 }
 
-BLYNK_READ(VP_SYSTEM_TIME){
-  Blynk.virtualWrite(VP_SYSTEM_TIME, systemHourMinute);
+BLYNK_READ(VP_CLOCK){
+  Blynk.virtualWrite(VP_CLOCK, systemClock);
 }
 
 
@@ -95,15 +95,40 @@ BLYNK_READ(VP_SYSTEM_TIME){
 void blynkTimerEvent()
 {
   blynkReconnect();
-  
+  yield();  
+
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
+  Blynk.virtualWrite(VP_DOOR_BACK, (ssDoorBack ? 255 : 0));
+  delay(MESSAGE_DELAY);
+
+  Blynk.virtualWrite(VP_MOTION, (ssMotion ? 255 : 0));
+  delay(MESSAGE_DELAY);
+
   yield();
   Serial.println("Blynk timer triggered...");
   // for all signals to be sent at once
+  Serial.println("Counter: " + String(runtimeMinutes));
+  Serial.println("Clock: " + String(systemClock));
+  Serial.println("Batt. Volt.: " + String(ssBatteryVolt));
+  Serial.println("Temperature: " + String(temp));
+  Serial.println("Humidity: " + String(humidity));
 
-  Blynk.virtualWrite(VP_DOOR_BACK, (ssDoorBack ? 255 : 0));
+
+  Blynk.virtualWrite(VP_RUNTIME, runtimeMinutes);
   delay(MESSAGE_DELAY);
+  Blynk.virtualWrite(VP_CLOCK, systemClock);
+  delay(MESSAGE_DELAY);
+  Blynk.virtualWrite(VP_BATT_VOLTAGE, ssBatteryVolt);
+  delay(MESSAGE_DELAY);
+  Blynk.virtualWrite(VP_TEMPERATURE, temp);
+  delay(MESSAGE_DELAY);
+  Blynk.virtualWrite(VP_HUMIDITY, humidity);
+  delay(MESSAGE_DELAY);
+
+  Serial.println("Blynk timer triggered...");
+  // for all signals to be sent at once
+
 }
 
 void blynkSetup(){
