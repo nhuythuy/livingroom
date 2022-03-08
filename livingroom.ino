@@ -80,7 +80,7 @@ void loop() {
 #endif
 #ifdef ENABLE_BLYNK
   yield();
-  blynkLoop();
+  blynkUpdate();
 #endif
 #endif
 }

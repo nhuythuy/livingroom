@@ -88,8 +88,6 @@ BLYNK_READ(VP_CLOCK){
   Blynk.virtualWrite(VP_CLOCK, systemClock);
 }
 
-
-// This function sends Arduino's up time every second to Virtual Pin (5).
 // In the app, Widget's reading frequency should be set to PUSH. This means
 // that you define how often to send data to Blynk App.
 void blynkTimerEvent()
@@ -139,7 +137,7 @@ void blynkSetup(){
   delay(200);
 }
 
-void blynkLoop(){
+void blynkUpdate(){
   Blynk.run();
   timer.run(); // Initiates BlynkTimer
 }
