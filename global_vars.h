@@ -30,6 +30,7 @@ int ssWaterLeak = 0;
 // actuators
 bool acBuzzer = false;
 bool acMotion = false;
+bool acToiletLedOn = false;
 
 bool forceCamPower = false;
 bool forceRadioPower = false;

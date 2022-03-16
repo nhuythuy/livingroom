@@ -14,6 +14,7 @@ void setupDigitalSensors(){
 }
 
 void updateDigitalSensors(){
+  yield();
   bool state;
   state = !digitalRead(PIN_SS_DOOR_BACK);
   if (state != ssDoorBack){
@@ -51,6 +52,7 @@ void updateDigitalSensors(){
 }
 
 bool updateHumidTemp(){
+  yield();
   humidity = dht.readHumidity();
   temp = dht.readTemperature();
   if (isnan(humidity) || isnan(temp)) {

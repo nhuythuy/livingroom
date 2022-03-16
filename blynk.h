@@ -16,6 +16,7 @@ int blynkCounter = 0;
 #define VP_TEMPERATURE                      V3
 #define VP_HUMIDITY                         V4
 
+#define VP_TOILET_LED_ON                    V10
 
 #define VP_DOOR_BACK_OPENED_MINUTES         V20
 
@@ -122,6 +123,9 @@ void blynkTimerEvent()
   Blynk.virtualWrite(VP_TEMPERATURE, temp);
   delay(MESSAGE_DELAY);
   Blynk.virtualWrite(VP_HUMIDITY, humidity);
+  delay(MESSAGE_DELAY);
+
+  Blynk.virtualWrite(VP_TOILET_LED_ON, humidity);
   delay(MESSAGE_DELAY);
 
   Serial.println("Blynk timer triggered...");

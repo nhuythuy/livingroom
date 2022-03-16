@@ -53,15 +53,12 @@ void loop() {
     yield();
     getServerTime();
 
-    yield();
 //    updateBattVolt();
-//    yield();
     updateHumidTemp();
-    yield();
     updateDigitalSensors();
-    yield();
-    updateCamPower();
-
+    
+    updateActuators();
+    
     Serial.println("-- Node name:              LIVING ROOM");
     Serial.println("0. Runtime (min):          " + String(runtimeMinutes));
     Serial.println("1. Temperature (*C):       " + String(temp));
