@@ -21,11 +21,13 @@ int blynkCounter = 0;
 #define VP_DOOR_BACK_OPENED_MINUTES         V20
 
 // digital states
-#define VP_DOOR_BACK                V51
-#define VP_MOTION                   V52
+#define VP_DOOR_BACK                  V51
+#define VP_MOTION                     V52
 
-#define VP_FORCE_CAMERA_POWER       V100
-#define VP_FORCE_RADIO_POWER        V101
+#define VP_FORCE_CAMERA_POWER         V100
+#define VP_FORCE_RADIO_POWER          V101
+#define VP_FORCE_MANUAL_TOILET_LED    V104
+#define VP_FORCE_PWR_TOILET_LED       V105
 
 #define BLYNK_PRINT Serial
 
@@ -52,16 +54,20 @@ void blynkReconnect() {
 
 BLYNK_WRITE(VP_FORCE_CAMERA_POWER)
 {
-  int pinVal = param.asInt(); // assigning incoming value from pin VP_FORCE_CAMERA_POWER to a variable
-  forceCamPower = (boolean)pinVal;
-  Serial.println("Force camera power: " + String(forceCamPower) + " - " + String(pinVal));
-  // process received value
+  forceCamPower = (boolean)param.asInt(); // assigning incoming value from pin VP_FORCE_CAMERA_POWER to a variable
 }
 
 BLYNK_WRITE(VP_FORCE_RADIO_POWER)
 {
-  int pinVal = param.asInt(); // assigning incoming value from pin VP_FORCE_RADIO_POWER to a variable
-  Serial.println("Force radio power: " + String(pinVal));
+  forceRadioPower = param.asInt();        // assigning incoming value from pin VP_FORCE_RADIO_POWER to a variable
+}
+
+BLYNK_WRITE(VP_FORCE_MANUAL_TOILET_LED){
+  manualToiletLedCtrlEnabled = (bool)param.asInt();
+}
+
+BLYNK_WRITE(VP_FORCE_PWR_TOILET_LED){
+  forceLedPower = (bool)param.asInt();
 }
 
 // for all signals requested by Blynk app (slow response)
@@ -74,7 +80,7 @@ BLYNK_READ(VP_DOOR_BACK_OPENED_MINUTES){
 }
 
 BLYNK_READ(VP_RUNTIME){
-    Blynk.virtualWrite(VP_RUNTIME, runtimeMinutes);
+  Blynk.virtualWrite(VP_RUNTIME, runtimeMinutes);
 }
 
 BLYNK_READ(VP_TEMPERATURE){
@@ -93,11 +99,11 @@ BLYNK_READ(VP_CLOCK){
 // that you define how often to send data to Blynk App.
 void blynkTimerEvent()
 {
+  Serial.println("Blynk timer triggered...");
   blynkReconnect();
   yield();  
 
-  // You can send any value at any time.
-  // Please don't send more that 10 values per second.
+  // You can send any value at any time, DON'T send more that 10 values per second.
   Blynk.virtualWrite(VP_DOOR_BACK, (ssDoorBack ? 255 : 0));
   delay(MESSAGE_DELAY);
 
@@ -105,15 +111,6 @@ void blynkTimerEvent()
   delay(MESSAGE_DELAY);
 
   yield();
-  Serial.println("Blynk timer triggered...");
-  // for all signals to be sent at once
-  Serial.println("Counter: " + String(runtimeMinutes));
-  Serial.println("Clock: " + String(systemClock));
-  Serial.println("Batt. Volt.: " + String(ssBatteryVolt));
-  Serial.println("Temperature: " + String(temp));
-  Serial.println("Humidity: " + String(humidity));
-
-
   Blynk.virtualWrite(VP_RUNTIME, runtimeMinutes);
   delay(MESSAGE_DELAY);
   Blynk.virtualWrite(VP_CLOCK, systemClock);
@@ -125,11 +122,8 @@ void blynkTimerEvent()
   Blynk.virtualWrite(VP_HUMIDITY, humidity);
   delay(MESSAGE_DELAY);
 
-  Blynk.virtualWrite(VP_TOILET_LED_ON, humidity);
+  Blynk.virtualWrite(VP_TOILET_LED_ON, acToiletLedOn);
   delay(MESSAGE_DELAY);
-
-  Serial.println("Blynk timer triggered...");
-  // for all signals to be sent at once
 
 }
 

@@ -45,7 +45,6 @@ void updateDigitalSensors(){
     else
       acMotion = false;
 
-    Serial.println("--- Motion IN (0/1): " + String(ssMotion));
     ssMotion = state;
   }
 

@@ -18,16 +18,22 @@ void updateCamPower(){
 
 void updateToiletLed(){
   yield();
+  acToiletLedOn = false;
 
-  if((currentMonth >= 4) && (currentMonth <= 10)){
-    if ((currentHour >= 23) && (currentHour <= 8))
-      acToiletLedOn = true;
+  if(manualToiletLedCtrlEnabled){
+    acToiletLedOn = forceLedPower;
   }
   else{
-    if ((currentHour >= 22) && (currentHour <= 9))
-      acToiletLedOn = true;
+    if((currentMonth >= 4) && (currentMonth <= 10)){
+      if ((currentHour >= 23) || (currentHour <= 8))
+        acToiletLedOn = true;
+    }
+    else{
+      if ((currentHour >= 22) || (currentHour <= 9))
+        acToiletLedOn = true;
+    }
   }
-
+  
   digitalWrite(PIN_AC_TOILET_LED, acToiletLedOn);
 #ifdef ENABLE_CAYENNE
 //  writeCayenneDigitalState(CH_POWER_RADIO, ledOn);

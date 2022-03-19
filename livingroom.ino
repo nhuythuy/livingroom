@@ -60,12 +60,6 @@ void loop() {
     updateActuators();
     
     Serial.println("-- Node name:              LIVING ROOM");
-    Serial.println("0. Runtime (min):          " + String(runtimeMinutes));
-    Serial.println("1. Temperature (*C):       " + String(temp));
-    Serial.println("2. Humidity (%):           " + String(humidity));
-    Serial.println("3. Door back opened (0/1): " + String(ssDoorBack) + " in (min)" + String(doorBackOpenedMinutes));
-    Serial.println("4. Motion IN (0/1):        " + String(ssMotion) + " OUT: " + String(acMotion));
-    Serial.println();
   
     flipLed();
   }

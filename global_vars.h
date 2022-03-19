@@ -30,10 +30,13 @@ int ssWaterLeak = 0;
 // actuators
 bool acBuzzer = false;
 bool acMotion = false;
-bool acToiletLedOn = false;
 
 bool forceCamPower = false;
 bool forceRadioPower = false;
+
+bool acToiletLedOn = false;
+bool manualToiletLedCtrlEnabled = false;
+bool forceLedPower = false;
 
 int doorBackOpenedMinutes = 0;
 int doorBackOpenedAt = 0;
