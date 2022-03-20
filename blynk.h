@@ -24,6 +24,8 @@ int blynkCounter = 0;
 #define VP_MOTION                           V52
 #define VP_TOILET_LED_ON                    V53
 
+#define VP_APP_VERSION                      V90
+
 #define VP_FORCE_CAMERA_POWER               V100
 #define VP_FORCE_RADIO_POWER                V101
 #define VP_FORCE_MANUAL_TOILET_LED          V104
@@ -98,6 +100,8 @@ BLYNK_READ(VP_CLOCK){
 void blynkSlowUpdate(){
   Serial.println("Blynk slow updating...");
   yield();
+  Blynk.virtualWrite(VP_APP_VERSION, APP_VERSION);  
+  delay(MESSAGE_DELAY);
   Blynk.virtualWrite(VP_RUNTIME, runtimeMinutes);
   delay(MESSAGE_DELAY);
   Blynk.virtualWrite(VP_CLOCK, systemClock);

@@ -5,11 +5,13 @@
 #define ENABLE_BLYNK
 #define ENABLE_CAYENNE
 
-#define SLOW_UPDATE_CYCLE_SECOND  10000           // 10 seconds
+#define SLOW_UPDATE_CYCLE_SECOND  10000     // 10 seconds
 
-#define DELAY_LONG        5000      // 5,0 seconds
-#define DELAY_SHORT       2500
+#define DELAY_LONG                5000      // 5,0 seconds
+#define DELAY_SHORT               2500
 long delayMs = DELAY_SHORT;
+
+#define APP_VERSION               1.2
 
 long globalState = 0;
 int debugCounter = 0;

@@ -57,7 +57,7 @@ void loop() {
     updateHumidTemp();
       
     blynkSlowUpdate();
-    printDebugSerial();
+//    printDebugSerial();
   }
 
   updateDigitalSensors();
