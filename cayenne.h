@@ -24,11 +24,12 @@ char dvClientID[] = CAYENNE_CLIENT_ID;
 
 
 // digital states
-#define CH_DOOR_BACK                51
-#define CH_MOTION                   52
+#define CH_DOOR_BACK                        51
+#define CH_MOTION                           52
+#define CH_TOILET_LED_ON                    53
 
-#define CH_FORCE_CAMERA_POWER       100
-#define CH_FORCE_RADIO_POWER        101
+#define CH_FORCE_CAMERA_POWER               100
+#define CH_FORCE_RADIO_POWER                101
 
 
 void cayenneSetup(){
@@ -50,6 +51,7 @@ CAYENNE_OUT_DEFAULT(){
     Cayenne.virtualWrite(CH_SYSTEM_TIME, systemClock);
 
   // digital signals
+    Cayenne.virtualWrite(CH_TOILET_LED_ON, acToiletLedOn);
 }
 
 void writeCayenneDigitalState(int channelId, int value){

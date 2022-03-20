@@ -16,18 +16,18 @@ int blynkCounter = 0;
 #define VP_TEMPERATURE                      V3
 #define VP_HUMIDITY                         V4
 
-#define VP_TOILET_LED_ON                    V10
 
 #define VP_DOOR_BACK_OPENED_MINUTES         V20
 
 // digital states
-#define VP_DOOR_BACK                  V51
-#define VP_MOTION                     V52
+#define VP_DOOR_BACK                        V51
+#define VP_MOTION                           V52
+#define VP_TOILET_LED_ON                    V53
 
-#define VP_FORCE_CAMERA_POWER         V100
-#define VP_FORCE_RADIO_POWER          V101
-#define VP_FORCE_MANUAL_TOILET_LED    V104
-#define VP_FORCE_PWR_TOILET_LED       V105
+#define VP_FORCE_CAMERA_POWER               V100
+#define VP_FORCE_RADIO_POWER                V101
+#define VP_FORCE_MANUAL_TOILET_LED          V104
+#define VP_FORCE_PWR_TOILET_LED             V105
 
 #define BLYNK_PRINT Serial
 
@@ -95,21 +95,8 @@ BLYNK_READ(VP_CLOCK){
   Blynk.virtualWrite(VP_CLOCK, systemClock);
 }
 
-// In the app, Widget's reading frequency should be set to PUSH. This means
-// that you define how often to send data to Blynk App.
-void blynkTimerEvent()
-{
-  Serial.println("Blynk timer triggered...");
-  blynkReconnect();
-  yield();  
-
-  // You can send any value at any time, DON'T send more that 10 values per second.
-  Blynk.virtualWrite(VP_DOOR_BACK, (ssDoorBack ? 255 : 0));
-  delay(MESSAGE_DELAY);
-
-  Blynk.virtualWrite(VP_MOTION, (ssMotion ? 255 : 0));
-  delay(MESSAGE_DELAY);
-
+void blynkSlowUpdate(){
+  Serial.println("Blynk slow updating...");
   yield();
   Blynk.virtualWrite(VP_RUNTIME, runtimeMinutes);
   delay(MESSAGE_DELAY);
@@ -122,22 +109,38 @@ void blynkTimerEvent()
   Blynk.virtualWrite(VP_HUMIDITY, humidity);
   delay(MESSAGE_DELAY);
 
-  Blynk.virtualWrite(VP_TOILET_LED_ON, acToiletLedOn);
+}
+
+// You can send any value at any time, DON'T send more that 10 values per second.
+void blynkTimerEvent()
+{
+  Serial.println("Blynk updating...");
+  blynkReconnect();
+  yield();  
+
+  Blynk.virtualWrite(VP_DOOR_BACK, (ssDoorBack ? 255 : 0));
   delay(MESSAGE_DELAY);
 
+  Blynk.virtualWrite(VP_MOTION, (ssMotion ? 255 : 0));
+  delay(MESSAGE_DELAY);
+
+  Blynk.virtualWrite(VP_TOILET_LED_ON, (acToiletLedOn ? 255 : 0));
+  delay(MESSAGE_DELAY);
 }
+
 
 void blynkSetup(){
   Serial.println("Connecting to Blynk ...");
   Blynk.begin(auth, ssid, pass);
-  timer.setInterval(2000L, blynkTimerEvent);
+//  timer.setInterval(2000L, blynkTimerEvent);
   Serial.println("Connected to Blynk !");
-  delay(200);
+  delay(100);
 }
 
 void blynkUpdate(){
   Blynk.run();
-  timer.run(); // Initiates BlynkTimer
+//  timer.run(); // Initiates BlynkTimer
+  blynkTimerEvent();
 }
 
 #endif

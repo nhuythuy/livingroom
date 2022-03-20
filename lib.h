@@ -7,8 +7,8 @@
 
 
 void flipLed(){
-  stateLed = !stateLed;
-  digitalWrite(PIN_LED, stateLed);
+  heartbeatLed = !heartbeatLed;
+  digitalWrite(PIN_LED, heartbeatLed);
 }
 
 void printlnValue(String desc, double value){
@@ -34,15 +34,14 @@ void printDebugSerial(){
   printlnValue("6. Runtime (minutes):       ", runtimeMinutes);
 
   Serial.println("--------------------------------------------");
-  printlnValue("Actuators:                  ", acActuators);
   printlnValue("1. Camera power force:      ", forceCamPower);
-  printlnValue("2. Toilet light manual:     ", manualEntranceLedCtrlEnabled);
+  printlnValue("2. Toilet light manual:     ", manualToiletLedCtrlEnabled);
   printlnValue("3. Toilet light force ON:   ", forceLedPower);
   printlnValue("3. Toilet light ON:         ", acToiletLedOn);
 
   Serial.println("--------------------------------------------");
   printlnValue("Door back opened (min):     ", doorBackOpenedMinutes);
-  printlnValue("Entrance motion ON (sec):   ", entranceMotionSeconds);
+//  printlnValue("Entrance motion ON (sec):   ", entranceMotionSeconds);
   Serial.println();
 }
 

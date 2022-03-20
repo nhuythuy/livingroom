@@ -5,6 +5,7 @@
 #define ENABLE_BLYNK
 #define ENABLE_CAYENNE
 
+#define SLOW_UPDATE_CYCLE_SECOND  10000           // 10 seconds
 
 #define DELAY_LONG        5000      // 5,0 seconds
 #define DELAY_SHORT       2500
@@ -13,7 +14,7 @@ long delayMs = DELAY_SHORT;
 long globalState = 0;
 int debugCounter = 0;
 
-bool stateLed = 0;
+bool heartbeatLed = 0;
 
 // sensors
 float humidity = 0.0;

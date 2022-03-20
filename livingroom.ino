@@ -47,23 +47,22 @@ void loop() {
   currentMillis = millis();
   runtimeMinutes = currentMillis / 60000;
   diffMillis = currentMillis - previousMillis;
-  if(abs(diffMillis) > 2000){         // sampling sensors every 2 sec
-    previousMillis = currentMillis;   // save the last time  
+  if(abs(diffMillis) > SLOW_UPDATE_CYCLE_SECOND){ // sampling sensors every 2 sec
+    previousMillis = currentMillis;               // save the last time  
 
     yield();
     getServerTime();
 
 //    updateBattVolt();
     updateHumidTemp();
-    updateDigitalSensors();
-    
-    updateActuators();
-    
-    Serial.println("-- Node name:              LIVING ROOM");
-  
-    flipLed();
+      
+    blynkSlowUpdate();
+    printDebugSerial();
   }
-  
+
+  updateDigitalSensors();
+  updateActuators();
+
 #ifdef ENABLE_WIFI
 #ifdef ENABLE_CAYENNE
   yield();
@@ -74,4 +73,6 @@ void loop() {
   blynkUpdate();
 #endif
 #endif
+  delay(1000);
+  flipLed();
 }
