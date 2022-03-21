@@ -25,11 +25,11 @@ bool updateToiletLed(){
   }
   else{
     if((currentMonth >= 4) && (currentMonth <= 10)){
-      if ((currentHour >= 23) || (currentHour <= 8))
+      if ((currentHour >= 19) || (currentHour < 7))
         ledOn = true;
     }
     else{
-      if ((currentHour >= 22) || (currentHour <= 9))
+      if ((currentHour >= 18) || (currentHour < 8))
         ledOn = true;
     }
   }
