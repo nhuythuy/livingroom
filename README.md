@@ -1,6 +1,6 @@
 # livingroom
-Living room monitoring and manipulation
-
+- Living room monitoring and manipulation
+- Arduino based on ESP8266 WEMOS D1 mini
 
 
 Create a file named auth_settings.h in the project folder with content as below to get built:
